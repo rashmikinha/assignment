@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Form Validations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-box">
+        <h2>Application form for YOGA classes</h2>
+
+        <div class="input-field">
+          <label for="">Name</label>
+          <input type="text" id="username" placeholder="username" />
+          <i class="fa" aria-hidden="true"></i>
+          <span></span>
+        </div>
+
+        <div class="input-field">
+          <label for="">Email</label>
+          <input type="text" id="email" placeholder="email address" />
+
+          <i class="fa" aria-hidden="true"></i>
+          <span></span>
+        </div>
+
+        <div class="input-field">
+          <label for="">Phone No.</label>
+          <input type="text" id="phone" placeholder="phone no." />
+
+          <i class="fa" aria-hidden="true"></i>
+          <span></span>
+        </div>
+
+        <div class="input-field">
+          <label for="">Age</label>
+          <input type="number" id="age" placeholder="age" />
+          <i class="fa" aria-hidden="true"></i>
+          <span></span>
+        </div>
+
+        <div class="input-field">
+          <label for="">Batch</label>
+          <select id="batch" name="batch" required>
+            <option value="1">Batch 1 : 6-7 AM</option>
+            <option value="2">Batch 2 : 7-8 AM</option>
+            <option value="4">Batch 3 : 8-9 AM</option>
+            <option value="4">Batch 4 : 5-6 PM</option>
+          </select>
+          <i class="fa" aria-hidden="true"></i>
+          <span></span>
+        </div>
+
+        <div class="input-field">
+          <label for="">Fee</label>
+          <input type="fee" id="fee" placeholder="fee code" />
+          <i class="fa" aria-hidden="true"></i>
+          <span></span>
+        </div>
+
+        <input type="submit" id="submit" value="Submit" />
+
+        <div class="input-field">
+          <label for="">Note:</label>
+          <label for="">1) The monthly fee is 500/ INR.
+            2) When you pay fee, code send on your phone 
+            nymber. Fill that code. ( UPI ID No - 7042270752 ) 
+            3) The participants can choose any batch in 
+            a month and can move to any other batch next 
+            month i.e. participants can shift from one 
+            batch to another in different months but in 
+            same month they need to be in same batch</label>
+          <i class="fa" aria-hidden="true"></i>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("submit")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          checkData();
+        });
+
+      var username = document.getElementById("username");
+      var email = document.getElementById("email");
+      var pass1 = document.getElementById("pass1");
+      var pass2 = document.getElementById("pass2");
+
+      function checkData() {
+        var usernameValue = username.value.trim();
+        var emailValue = email.value.trim();
+        var phoneValue = phone.value.trim();
+        var ageValue = age.value.trim();
+        var feeValue = fee.value.trim();
+
+        if (usernameValue == "") {
+          setError(username, "Username can't be blank");
+        } else {
+          setSuccess(username);
+        }
+
+        if (emailValue == "") {
+          setError(email, "Email can't be blank");
+        } else if (!isEmail(emailValue)) {
+          setError(email, "Email is not Valid");
+        } else {
+          setSuccess(email);
+        }
+
+        if (phoneValue == "") {
+          setError(phone, "phone can't be blank");
+        } else if (!validatePhoneNumber(phoneValue)) {
+          setError(phone, "Phone No. is not Valid");
+        } else {
+          setSuccess(phone);
+        }
+
+        if (ageValue == "") {
+          setError(age, "Age can't be blank");
+        } else if (ageValue < 18 || ageValue > 65) {
+          setError(age, "Age must be in between 18 and 65");
+        } else {
+          setSuccess(age);
+        }
+
+        if (feeValue == "") {
+          setError(Fee, "Fee can't be blank");
+        } else if (feeValue != "Paid") {
+          setError(fee, "Pay Fee first");
+        } else {
+          setSuccess(fee);
+        }
+      }
+
+      function setError(u, msg) {
+        var parentBox = u.parentElement;
+        parentBox.className = "input-field error";
+        var span = parentBox.querySelector("span");
+        var fa = parentBox.querySelector(".fa");
+        span.innerText = msg;
+        fa.className = "fa fa-exclamation-circle";
+      }
+
+      function setSuccess(u) {
+        var parentBox = u.parentElement;
+        parentBox.className = "input-field success";
+        var fa = parentBox.querySelector(".fa");
+        fa.className = "fa fa-check-circle";
+      }
+
+      function isEmail(e) {
+        var reg =
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return reg.test(e);
+      }
+
+      function validatePhoneNumber(input_str) {
+        var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+        return re.test(input_str);
+      }
+    </script>
+  </body>
+</html>
